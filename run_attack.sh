@@ -10,14 +10,14 @@
 #   MAX_EPSILON - maximum allowed L_{\infty} norm of adversarial perturbation
 #
 
-INPUT_DIR=$1
-OUTPUT_DIR=$2
-MAX_EPSILON=$3
+INPUT_DIRECTORY=$1
+OUTPUT_DIRECTORY=$2
+MAX_PERTURBATION=$3
 
 python attack_iter.py \
-  --input_dir="${INPUT_DIR}" \
-  --output_dir="${OUTPUT_DIR}" \
-  --max_epsilon="${MAX_EPSILON}" \
+  --input_dir="${INPUT_DIRECTORY}" \
+  --output_dir="${OUTPUT_DIRECTORY}" \
+  --max_epsilon="${MAX_PERTURBATION}" \
   --checkpoint_path_inception_v3=inception_v3.ckpt \
   --checkpoint_path_adv_inception_v3=adv_inception_v3_rename.ckpt \
   --checkpoint_path_ens3_adv_inception_v3=ens3_adv_inception_v3_rename.ckpt \
