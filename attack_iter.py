@@ -50,7 +50,7 @@ tf.flags.DEFINE_string(
     'output_dir', '', 'Output directory with images.')
 
 tf.flags.DEFINE_float(
-    'max_epsilon', 16.0, 'Maximum size of adversarial perturbation.')
+    'max_epsilon', 32.0, 'Maximum size of adversarial perturbation.')
 
 tf.flags.DEFINE_integer(
     'num_iter', 10, 'Number of iterations.')
@@ -62,7 +62,7 @@ tf.flags.DEFINE_integer(
     'image_height', 299, 'Height of each input images.')
 
 tf.flags.DEFINE_integer(
-    'batch_size', 10, 'How many images process at one time.')
+    'batch_size', 20, 'How many images process at one time.')
 
 tf.flags.DEFINE_float(
     'momentum', 1.0, 'Momentum.')
@@ -184,6 +184,8 @@ def graph(x, y, i, x_max, x_min, grad):
   noise = tf.gradients(cross_entropy, x)[0]
   noise = noise / tf.reduce_mean(tf.abs(noise), [1,2,3], keep_dims=True)
   noise = momentum * grad + noise
+  x = x + np.random.uniform(-FLAGS.max_epsilon,FLAGS.max_epsilon , x.shape)
+    
   x = x + alpha * tf.sign(noise)
   x = tf.clip_by_value(x, x_min, x_max)
   i = tf.add(i, 1)
