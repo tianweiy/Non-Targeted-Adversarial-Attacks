@@ -185,7 +185,8 @@ def graph(x, y, i, x_max, x_min, grad):
   noise = tf.gradients(cross_entropy, x)[0]
   noise = noise / tf.reduce_mean(tf.abs(noise), [1,2,3], keep_dims=True)
   noise = momentum * grad + noise
-  x = x + np.random.uniform(-FLAGS.max_epsilon,FLAGS.max_epsilon , x.shape)
+  if i==0:
+    x = x + np.random.uniform(-FLAGS.max_epsilon,FLAGS.max_epsilon , x.shape)
     
   x = x + alpha * tf.sign(noise)
   x = tf.clip_by_value(x, x_min, x_max)
